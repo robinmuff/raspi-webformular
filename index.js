@@ -33,6 +33,8 @@ app.post("/items/del", function(req, res) {
 
     fs.writeFileSync('static/data/information.json', JSON.stringify(newinfos));
 
+    updateTextFiles();
+
     res.redirect("/")
 });
 app.post("/items/add", function(req, res) {
@@ -43,6 +45,8 @@ app.post("/items/add", function(req, res) {
 
     fs.writeFileSync('static/data/information.json', JSON.stringify(infos));
 
+    updateTextFiles();
+
     res.redirect("/")
 });
 app.post("/server/restart", function(req, res) {
@@ -52,3 +56,18 @@ app.post("/server/restart", function(req, res) {
 app.listen(port, function() {
     console.log('Listening on port ' + port);
 });
+
+function updateTextFiles() {
+    let rawdata = fs.readFileSync('static/data/information.json');
+    let infos = JSON.parse(rawdata);
+    let csvtext = "";
+    let txttext = "";
+
+    for (var i = 0; i < infos.length; i++) {
+        csvtext += "\"" + infos[i].name + "\"," + infos[i].kuerzel + "," + infos[i].website + "\n";
+        txttext += infos[i].website + "\n";
+    }
+
+    fs.writeFileSync("textFiles/websites.csv", csvtext);
+    fs.writeFileSync("textFiles/websites.txt", txttext);
+}
