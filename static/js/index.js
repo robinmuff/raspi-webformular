@@ -20,12 +20,12 @@ async function loadTableData() {
 async function warning() {
     var doRestart = confirm('Sind Sie sicher, dass Sie das Dashboard neustarten wollen? (2 Minuten)');
     if (doRestart) {
-        await fetch("/restart", { method: "POST" });
+        await fetch("/server/restart", { method: "POST" });
     }
 }
 
 function deleteRequest(elem) {
-    fetch("/remove", {
+    fetch("/items/del", {
         method: "POST",
         headers: {
             'Accept': 'application/json',

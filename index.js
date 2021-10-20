@@ -20,10 +20,7 @@ app.use(express.static('static'));
 app.get("/", function(req, res) {
     res.sendFile("/static/sites/index.html", options)
 });
-app.post("/restart", function(req, res) {
-    exec('/sbin/shutdown -r now');
-});
-app.post("/remove", function(req, res) {
+app.post("/items/del", function(req, res) {
     let rawdata = fs.readFileSync('static/data/information.json');
     let infos = JSON.parse(rawdata);
     let newinfos = [];
@@ -38,7 +35,7 @@ app.post("/remove", function(req, res) {
 
     res.redirect("/")
 });
-app.post("/add", function(req, res) {
+app.post("/items/add", function(req, res) {
     let rawdata = fs.readFileSync('static/data/information.json');
     let infos = JSON.parse(rawdata);
 
@@ -47,6 +44,9 @@ app.post("/add", function(req, res) {
     fs.writeFileSync('static/data/information.json', JSON.stringify(infos));
 
     res.redirect("/")
+});
+app.post("/server/restart", function(req, res) {
+    exec('/sbin/shutdown -r now');
 });
 
 app.listen(port, function() {
