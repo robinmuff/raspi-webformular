@@ -4,6 +4,7 @@ loadTableData();
 function loadDocumentValues() {
     document.title = location.hostname + " - Website";
     document.getElementById("title").innerHTML = "Raspberry Pi | <b>" + location.hostname + "</b>";
+    document.getElementById("footerCopyRightYear").innerText = "© " + new Date().getFullYear();
 }
 
 async function loadTableData() {
