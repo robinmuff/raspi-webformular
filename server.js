@@ -1,9 +1,10 @@
-var port = 80;
-
+require('dotenv').config()
 var express = require('express');
 const fs = require('fs');
 const { exec } = require("child_process");
 var app = express();
+
+var port = process.env.port || 81;
 
 const options = {
     root: __dirname,
@@ -18,10 +19,10 @@ app.use(express.urlencoded({
 app.use(express.static('static'));
 
 app.get("/", function(req, res) {
-    res.sendFile("/static/sites/index.html", options)
+    res.sendFile(process.env.indexFile, options)
 });
 app.post("/items/del", function(req, res) {
-    let rawdata = fs.readFileSync('static/data/information.json');
+    let rawdata = fs.readFileSync(process.env.infoFile);
     let infos = JSON.parse(rawdata);
     let newinfos = [];
 
@@ -31,26 +32,26 @@ app.post("/items/del", function(req, res) {
         }
     }
 
-    fs.writeFileSync('static/data/information.json', JSON.stringify(newinfos));
+    fs.writeFileSync(process.env.infoFile, JSON.stringify(newinfos));
 
     updateTextFiles();
 
     res.redirect("/")
 });
 app.post("/items/add", function(req, res) {
-    let rawdata = fs.readFileSync('static/data/information.json');
+    let rawdata = fs.readFileSync(process.env.infoFile);
     let infos = JSON.parse(rawdata);
 
     infos.push({ "name": req.body.name, "kuerzel": req.body.kuerzel, "website": req.body.website })
 
-    fs.writeFileSync('static/data/information.json', JSON.stringify(infos));
+    fs.writeFileSync(process.env.infoFile, JSON.stringify(infos));
 
     updateTextFiles();
 
     res.redirect("/")
 });
 app.post("/server/restart", function(req, res) {
-    exec('/sbin/shutdown -r now');
+    exec(process.env.restartCommand);
 });
 
 app.listen(port, function() {
@@ -58,7 +59,7 @@ app.listen(port, function() {
 });
 
 function updateTextFiles() {
-    let rawdata = fs.readFileSync('static/data/information.json');
+    let rawdata = fs.readFileSync(process.env.infoFile);
     let infos = JSON.parse(rawdata);
     let csvtext = "";
     let txttext = "";
@@ -68,6 +69,6 @@ function updateTextFiles() {
         txttext += infos[i].website + "\n";
     }
 
-    fs.writeFileSync("textFiles/websites.csv", csvtext);
-    fs.writeFileSync("textFiles/websites.txt", txttext);
+    fs.writeFileSync(process.env.exportCSVfile, csvtext);
+    fs.writeFileSync(process.env.exportTXTfile, txttext);
 }
