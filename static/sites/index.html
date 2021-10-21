@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <!-- Title -->
+                            <h2 id="title"></h2>
+                        </div>
+                        <!-- Add-Button -->
+                        <div class="col-xs-6 ">
+                            <a href="#addWebsiteModal" class="btn btn-add" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Website hinzufügen</span></a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Vor-/Nachname</th>
+                            <th>Kürzel</th>
+                            <th>Website</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablebody">
+
+                    </tbody>
+                </table>
+                <div class="footer-container">
+                    <button type="button" id="reboot" class="btn-reboot btn btn-outline-success" onclick="warning()">Neustarten</button>
+                    <p class="credits">Written and Illustrated by Mike Dätwyler</p>
+                    <p class="credits" id="footerCopyRightYear"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add-Modal -->
+    <div id="addWebsiteModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="/items/add">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Website hinzufügen</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Vor-/Nachname</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kürzel</label>
+                            <input type="text" name="kuerzel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="url" name="website" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" name="cancel" class="btn btn-default" data-dismiss="modal" value="abbrechen">
+                        <input type="submit" name="submit" class="btn btn-success" value="Hinzufügen">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="js/index.js"></script>
+
+</html>
